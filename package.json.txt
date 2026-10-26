@@ -1,7 +1,6 @@
 {
   "name": "laundry-pos-bbl",
   "version": "1.0.0",
-  "description": "Minimal Laundry POS with BBL Bill Payment",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
