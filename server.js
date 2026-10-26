@@ -4,57 +4,49 @@ const path = require('path');
 
 const app = express();
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname)));
 
-const BBL_CONFIG = {
-    companyCode: 'BBLBPM',
-    serviceCode: 'OTRRPQR'
+// 🔑 [จุดที่ต้องใส่ข้อมูล] ข้อมูลการเชื่อมต่อ GB Prime Pay
+const GB_CONFIG = {
+    // ใส่ Token หรือ API Key ที่ได้มาจากระบบ GB Prime Pay ของคุณตรงนี้
+    token: 'ใส่_GBPRIME_TOKEN_ของคุณตรงนี้', 
+    // ถ้าใช้งานแบบทดสอบ (Sandbox) ให้ใช้ URL ทดสอบ, ถ้าใช้งานจริง (Live) ให้เปลี่ยนเป็น https://api.gbprimepay.com/v1/qrCode
+    apiUrl: 'https://api.gbprimepay.com/v1/qrCode' 
 };
 
-// ตัวแปรกลางเก็บบิลล่าสุดบนเซิร์ฟเวอร์ (เพื่อให้มือถือ/แท็บเล็ตต่างเครื่องกันดึงข้อมูลตรงกันได้)
+// ตัวแปรเก็บสถานะออร์เดอร์กลางสำหรับเชื่อมโยงระหว่างพนักงานกับลูกค้าระหว่างเครื่อง
 let currentOrder = { total: 0, status: 'idle', timestamp: 0 };
 
-function calculateCRC16(str) {
-    let crc = 0xFFFF;
-    for (let c = 0; c < str.length; c++) {
-        crc ^= str.charCodeAt(c) << 8;
-        for (let i = 0; i < 8; i++) {
-            if (crc & 0x8000) { crc = (crc << 1) ^ 0x1021; } 
-            else { crc = crc << 1; }
-        }
-    }
-    let hex = (crc & 0xFFFF).toString(16).toUpperCase();
-    return "0000".substr(0, 4 - hex.length) + hex;
-}
-
-// API สร้าง PromptPay QR Code
-app.post('/api/create-bbl-qr', (req, res) => {
+// API ขอ QR Code จาก GB Prime Pay
+app.post('/api/create-bbl-qr', async (req, res) => {
     try {
         const { amount } = req.body;
         let amountStr = parseFloat(amount).toFixed(2);
-        
-        let payload = "";
-        payload += "000201"; 
-        payload += "010212"; 
-        
-        let merchantAccount = "";
-        merchantAccount += "0016A000000677010111"; 
-        merchantAccount += "01" + String(BBL_CONFIG.companyCode.length).padStart(2, '0') + BBL_CONFIG.companyCode;
-        merchantAccount += "02" + String(BBL_CONFIG.serviceCode.length).padStart(2, '0') + BBL_CONFIG.serviceCode;
-        merchantAccount += "030200";
-        
-        payload += "29" + String(merchantAccount.length).padStart(2, '0') + merchantAccount;
-        payload += "5303764"; 
-        payload += "54" + String(amountStr.length).padStart(2, '0') + amountStr; 
-        payload += "5802TH"; 
-        payload += "6304"; 
-        
-        let crc = calculateCRC16(payload);
-        let finalQrPayload = payload + crc;
 
-        res.json({ success: true, qrData: finalQrPayload });
+        // สร้างข้อมูลส่งไปที่ GB Prime Pay API
+        // (รูปแบบ Payload ตามมาตรฐาน API ของ GB Prime Pay สำหรับการสร้าง QR PromptPay)
+        const response = await axios.post(GB_CONFIG.apiUrl, {
+            token: GB_CONFIG.token,
+            amount: amountStr,
+            referenceNo: 'TX-' + Date.now(),
+            detail: 'Minimal Laundry Payment'
+        }, {
+            headers: {
+                'Authorization': 'Basic ' + Buffer.from(GB_CONFIG.token + ':').toString('base64'),
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // ตรวจสอบข้อมูลที่ได้กลับมาจาก GB Prime Pay
+        if (response.data && response.data.qrCode) {
+            res.json({ success: true, qrData: response.data.qrCode });
+        } else {
+            // กรณีที่โครงสร้าง API ตอบกลับมาในรูปแบบอื่น (เช่น ข้อความดิบหรือรูปภาพ Base64)
+            res.json({ success: true, qrData: response.data.qrCode || response.data.payload });
+        }
+
     } catch (error) {
+        console.error("GB Prime Pay Error:", error.response?.data || error.message);
         res.status(500).json({ success: false, message: error.message });
     }
 });
