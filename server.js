@@ -6,47 +6,63 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
-// 🔑 [จุดที่ต้องใส่ข้อมูล] ข้อมูลการเชื่อมต่อ GB Prime Pay
-const GB_CONFIG = {
-    // ใส่ Token หรือ API Key ที่ได้มาจากระบบ GB Prime Pay ของคุณตรงนี้
-    token: 'ใส่_GBPRIME_TOKEN_ของคุณตรงนี้', 
-    // ถ้าใช้งานแบบทดสอบ (Sandbox) ให้ใช้ URL ทดสอบ, ถ้าใช้งานจริง (Live) ให้เปลี่ยนเป็น https://api.gbprimepay.com/v1/qrCode
-    apiUrl: 'https://api.gbprimepay.com/v1/qrCode' 
+// 🔑 [ตั้งค่าระบบ Sendit / GB Prime Pay Unified API]
+const SENDIT_CONFIG = {
+    // ใส่ Secret Key และ Public Key ที่ได้จากหน้า Dashboard ของระบบ Sendit / GB Prime Pay
+    secretKey: 'Lp-shop2026-xK93mQ7',
+    publicKey: 'xnd_public_development_5rJMNQyM2F0lorNomqJQbqGUpnOdVOQN66HT4hOrUULqnFXaYCkeufBJp8FXHBEl',
+    // URL สำหรับเชื่อมต่อ (ใช้ https://api.gbprimepay.com สำหรับระบบจริง Production)
+    baseUrl: 'https://api.gbprimepay.com' 
 };
 
 // ตัวแปรเก็บสถานะออร์เดอร์กลางสำหรับเชื่อมโยงระหว่างพนักงานกับลูกค้าระหว่างเครื่อง
 let currentOrder = { total: 0, status: 'idle', timestamp: 0 };
 
-// API ขอ QR Code จาก GB Prime Pay
+// API ขอ QR Code จาก Sendit
 app.post('/api/create-bbl-qr', async (req, res) => {
     try {
         const { amount } = req.body;
         let amountStr = parseFloat(amount).toFixed(2);
 
-        // สร้างข้อมูลส่งไปที่ GB Prime Pay API
-        // (รูปแบบ Payload ตามมาตรฐาน API ของ GB Prime Pay สำหรับการสร้าง QR PromptPay)
-        const response = await axios.post(GB_CONFIG.apiUrl, {
-            token: GB_CONFIG.token,
+        // 1. ขอ Token ยืนยันตัวตนจาก Sendit API ก่อน
+        const tokenResponse = await axios.post(`${SENDIT_CONFIG.baseUrl}/unified/authToken/create`, {
+            secretKey: SENDIT_CONFIG.secretKey,
+            publicKey: SENDIT_CONFIG.publicKey
+        }, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!tokenResponse.data || !tokenResponse.data.authToken) {
+            throw new Error('ไม่สามารถขอ Authentication Token จาก Sendit ได้');
+        }
+
+        const authToken = tokenResponse.data.authToken;
+
+        // 2. ส่งคำสั่งสร้างรายการ QR Code (PromptPay / QR Cash) ผ่าน Unified API
+        const transactionResponse = await axios.post(`${SENDIT_CONFIG.baseUrl}/unified/transaction`, {
+            authToken: authToken,
+            // กำหนดประเภทการชำระเงิน Q = QR Cash / PromptPay
+            apiType: 'PC', 
+            paymentType: 'Q', 
             amount: amountStr,
             referenceNo: 'TX-' + Date.now(),
             detail: 'Minimal Laundry Payment'
         }, {
-            headers: {
-                'Authorization': 'Basic ' + Buffer.from(GB_CONFIG.token + ':').toString('base64'),
-                'Content-Type': 'application/json'
-            }
+            headers: { 'Content-Type': 'application/json' }
         });
 
-        // ตรวจสอบข้อมูลที่ได้กลับมาจาก GB Prime Pay
-        if (response.data && response.data.qrCode) {
-            res.json({ success: true, qrData: response.data.qrCode });
+        const txnData = transactionResponse.data;
+
+        // ตรวจสอบและดึงข้อมูล QR Code Payload ออกมาใช้งาน
+        if (txnData && (txnData.qrCode || txnData.payload || txnData.qrImage)) {
+            let qrString = txnData.qrCode || txnData.payload || txnData.qrImage;
+            res.json({ success: true, qrData: qrString });
         } else {
-            // กรณีที่โครงสร้าง API ตอบกลับมาในรูปแบบอื่น (เช่น ข้อความดิบหรือรูปภาพ Base64)
-            res.json({ success: true, qrData: response.data.qrCode || response.data.payload });
+            throw new Error('ไม่พบข้อมูล QR Code จากการตอบกลับของระบบ Sendit');
         }
 
     } catch (error) {
-        console.error("GB Prime Pay Error:", error.response?.data || error.message);
+        console.error("Sendit API Error:", error.response?.data || error.message);
         res.status(500).json({ success: false, message: error.message });
     }
 });
