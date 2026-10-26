@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: laundry-pos-system
-    env: node
-    buildCommand: npm install
-    startCommand: node server.js
-    plan: free
