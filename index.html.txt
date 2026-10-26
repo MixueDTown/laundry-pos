@@ -303,7 +303,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic & BBL Bill Payment Generator -->
+    <!-- JavaScript Logic & BBL API Fetcher -->
     <script>
         let cart = [];
         let transactions = JSON.parse(localStorage.getItem('laundry_transactions')) || [];
@@ -466,50 +466,6 @@
             totalEl.innerText = total.toLocaleString() + " บาท";
         }
 
-        // =========================================================================
-        // ฟังก์ชันสร้าง PromptPay Bill Payment สำหรับธนาคารกรุงเทพ (BBLBPM / OTRRPQR)
-        // =========================================================================
-        function generateBBLBillPaymentPayload(companyCode, serviceCode, amount) {
-            let amountStr = parseFloat(amount).toFixed(2);
-            let payload = "";
-            payload += "000201"; 
-            payload += "010212"; 
-            
-            let merchantAccount = "";
-            merchantAccount += "0016A000000677010111"; 
-            
-            let formattedCompanyCode = "01" + String(companyCode.length).padStart(2, '0') + companyCode;
-            merchantAccount += formattedCompanyCode;
-            
-            let formattedServiceCode = "02" + String(serviceCode.length).padStart(2, '0') + serviceCode;
-            merchantAccount += formattedServiceCode;
-
-            let ref2 = "00";
-            merchantAccount += "03" + String(ref2.length).padStart(2, '0') + ref2;
-            
-            payload += "29" + String(merchantAccount.length).padStart(2, '0') + merchantAccount;
-            payload += "5303764"; 
-            payload += "54" + String(amountStr.length).padStart(2, '0') + amountStr; 
-            payload += "5802TH"; 
-            payload += "6304"; 
-            
-            let crc = calculateCRC16(payload);
-            return payload + crc;
-        }
-
-        function calculateCRC16(str) {
-            let crc = 0xFFFF;
-            for (let c = 0; c < str.length; c++) {
-                crc ^= str.charCodeAt(c) << 8;
-                for (let i = 0; i < 8; i++) {
-                    if (crc & 0x8000) { crc = (crc << 1) ^ 0x1021; } 
-                    else { crc = crc << 1; }
-                }
-            }
-            let hex = (crc & 0xFFFF).toString(16).toUpperCase();
-            return "0000".substr(0, 4 - hex.length) + hex;
-        }
-
         function sendToCustomerDisplay() {
             if(cart.length === 0) {
                 alert("กรุณาเลือกรายการสินค้าก่อน");
@@ -547,7 +503,35 @@
             closeConfirmModal();
         }
 
-        // อัปเดตการแสดงผลฝั่งลูกค้าแบบ Real-time พร้อมฝัง Company Code & Service Code
+        // ขอ QR Code จาก Server Backend ที่เชื่อมกับ BBL API
+        async function fetchBBLQRCode(amount) {
+            try {
+                let response = await fetch('/api/create-bbl-qr', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: amount })
+                });
+                let data = await response.json();
+                if(data.success) {
+                    document.getElementById("qrcode-container").innerHTML = "";
+                    new QRCode(document.getElementById("qrcode-container"), {
+                        text: data.qrData,
+                        width: 200,
+                        height: 200,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                } else {
+                    alert("เกิดข้อผิดพลาดในการสร้าง QR Code");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์หลังบ้านได้");
+            }
+        }
+
+        // อัปเดตการแสดงผลฝั่งลูกค้าแบบ Real-time
         window.addEventListener('storage', (e) => {
             if(e.key === 'laundry_active_order') {
                 let order = JSON.parse(e.newValue);
@@ -558,19 +542,8 @@
                         document.getElementById('cust-active').classList.remove('hidden');
                         document.getElementById('cust-display-amount').innerText = order.total.toLocaleString() + " บาท";
                         
-                        let bblCompanyCode = "BBLBPM"; 
-                        let bblServiceCode = "OTRRPQR"; 
-                        
-                        let qrPayload = generateBBLBillPaymentPayload(bblCompanyCode, bblServiceCode, order.total);
-                        document.getElementById("qrcode-container").innerHTML = "";
-                        new QRCode(document.getElementById("qrcode-container"), {
-                            text: qrPayload,
-                            width: 200,
-                            height: 200,
-                            colorDark: "#000000",
-                            colorLight: "#ffffff",
-                            correctLevel: QRCode.CorrectLevel.M
-                        });
+                        // เรียกใช้ฟังก์ชันดึง QR Code ผ่าน Backend API
+                        fetchBBLQRCode(order.total);
 
                     } else if(order.status === 'success') {
                         document.getElementById('cust-active').classList.add('hidden');
