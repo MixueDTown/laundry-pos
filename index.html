@@ -21,8 +21,8 @@
         <div class="flex items-center space-x-2">
             <div class="w-7 h-7 rounded-lg bg-stone-900 flex items-center justify-center text-white font-bold text-xs">L</div>
             <div>
-                <h1 class="font-bold text-stone-800 text-xs">Minimal Laundry</h1>
-                <p id="mode-indicator" class="text-[9px] text-emerald-600 font-medium">● โหมดพนักงาน (BBL Bill Payment Ready)</p>
+                <h1 class="font-bold text-stone-800 text-xs">Minimal Laundry POS</h1>
+                <p id="mode-indicator" class="text-[9px] text-emerald-600 font-medium">● โหมดพนักงาน (Cross-Device Ready)</p>
             </div>
         </div>
         <div class="flex space-x-1">
@@ -37,138 +37,52 @@
 
         <!-- 1. STAFF POS VIEW -->
         <div id="view-staff" class="view-section active grid grid-cols-1 lg:grid-cols-12 gap-2 h-full overflow-hidden">
-            
-            <!-- Left Side (70% -> 8 Cols): Machines Layout -->
             <div class="lg:col-span-8 flex flex-col gap-2 h-full overflow-hidden">
-                
-                <!-- Washers W1-W8 -->
                 <div class="bg-sky-50/50 p-2 rounded-xl border border-sky-100 shadow-xs flex flex-col justify-between flex-1 overflow-hidden">
-                    <h2 class="text-[10px] font-bold text-sky-900 uppercase tracking-wider mb-0.5 shrink-0">หมวดที่ 1: เครื่องซักผ้า (W1 - W8)</h2>
+                    <h2 class="text-[10px] font-bold text-sky-900 uppercase tracking-wider mb-0.5 shrink-0">เครื่องซักผ้า (W1 - W8)</h2>
                     <div class="grid grid-cols-4 gap-1.5 h-full">
-                        <button onclick="openWashModal(1, 'W1', 10)" class="bg-[#E0F2FE] hover:bg-[#BAE6FD] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-sky-900 leading-tight">W1</span>
-                            <span class="text-[9px] text-sky-700 font-medium">10 กก.</span>
-                            <span class="text-[10px] font-bold text-sky-950 mt-0.5">เริ่ม 40.-</span>
-                        </button>
-                        <button onclick="openWashModal(2, 'W2', 10)" class="bg-[#E0F2FE] hover:bg-[#BAE6FD] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-sky-900 leading-tight">W2</span>
-                            <span class="text-[9px] text-sky-700 font-medium">10 กก.</span>
-                            <span class="text-[10px] font-bold text-sky-950 mt-0.5">เริ่ม 40.-</span>
-                        </button>
-                        <button onclick="openWashModal(3, 'W3', 10)" class="bg-[#E0F2FE] hover:bg-[#BAE6FD] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-sky-900 leading-tight">W3</span>
-                            <span class="text-[9px] text-sky-700 font-medium">10 กก.</span>
-                            <span class="text-[10px] font-bold text-sky-950 mt-0.5">เริ่ม 40.-</span>
-                        </button>
-                        <button onclick="openWashModal(4, 'W4', 10)" class="bg-[#E0F2FE] hover:bg-[#BAE6FD] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-sky-900 leading-tight">W4</span>
-                            <span class="text-[9px] text-sky-700 font-medium">10 กก.</span>
-                            <span class="text-[10px] font-bold text-sky-950 mt-0.5">เริ่ม 40.-</span>
-                        </button>
-                        <button onclick="openWashModal(5, 'W5', 15)" class="bg-[#E0F2FE] hover:bg-[#BAE6FD] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-sky-900 leading-tight">W5</span>
-                            <span class="text-[9px] text-sky-700 font-medium">15 กก.</span>
-                            <span class="text-[10px] font-bold text-sky-950 mt-0.5">เริ่ม 60.-</span>
-                        </button>
-                        <button onclick="openWashModal(6, 'W6', 15)" class="bg-[#E0F2FE] hover:bg-[#BAE6FD] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-sky-900 leading-tight">W6</span>
-                            <span class="text-[9px] text-sky-700 font-medium">15 กก.</span>
-                            <span class="text-[10px] font-bold text-sky-950 mt-0.5">เริ่ม 60.-</span>
-                        </button>
-                        <button onclick="openWashModal(7, 'W7', 20)" class="bg-[#E0F2FE] hover:bg-[#BAE6FD] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-sky-900 leading-tight">W7</span>
-                            <span class="text-[9px] text-sky-700 font-medium">20 กก.</span>
-                            <span class="text-[10px] font-bold text-sky-950 mt-0.5">เริ่ม 70.-</span>
-                        </button>
-                        <button onclick="openWashModal(8, 'W8', 20)" class="bg-[#E0F2FE] hover:bg-[#BAE6FD] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-sky-900 leading-tight">W8</span>
-                            <span class="text-[9px] text-sky-700 font-medium">20 กก.</span>
-                            <span class="text-[10px] font-bold text-sky-950 mt-0.5">เริ่ม 70.-</span>
-                        </button>
+                        <button onclick="openWashModal(1, 'W1', 10)" class="bg-[#E0F2FE] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-sky-900">W1</span><span class="text-[9px] text-sky-700">10กก.</span><span class="text-[10px] font-bold text-sky-950">40.-</span></button>
+                        <button onclick="openWashModal(2, 'W2', 10)" class="bg-[#E0F2FE] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-sky-900">W2</span><span class="text-[9px] text-sky-700">10กก.</span><span class="text-[10px] font-bold text-sky-950">40.-</span></button>
+                        <button onclick="openWashModal(3, 'W3', 10)" class="bg-[#E0F2FE] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-sky-900">W3</span><span class="text-[9px] text-sky-700">10กก.</span><span class="text-[10px] font-bold text-sky-950">40.-</span></button>
+                        <button onclick="openWashModal(4, 'W4', 10)" class="bg-[#E0F2FE] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-sky-900">W4</span><span class="text-[9px] text-sky-700">10กก.</span><span class="text-[10px] font-bold text-sky-950">40.-</span></button>
+                        <button onclick="openWashModal(5, 'W5', 15)" class="bg-[#E0F2FE] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-sky-900">W5</span><span class="text-[9px] text-sky-700">15กก.</span><span class="text-[10px] font-bold text-sky-950">60.-</span></button>
+                        <button onclick="openWashModal(6, 'W6', 15)" class="bg-[#E0F2FE] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-sky-900">W6</span><span class="text-[9px] text-sky-700">15กก.</span><span class="text-[10px] font-bold text-sky-950">60.-</span></button>
+                        <button onclick="openWashModal(7, 'W7', 20)" class="bg-[#E0F2FE] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-sky-900">W7</span><span class="text-[9px] text-sky-700">20กก.</span><span class="text-[10px] font-bold text-sky-950">70.-</span></button>
+                        <button onclick="openWashModal(8, 'W8', 20)" class="bg-[#E0F2FE] p-1 rounded-xl border border-sky-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-sky-900">W8</span><span class="text-[9px] text-sky-700">20กก.</span><span class="text-[10px] font-bold text-sky-950">70.-</span></button>
                     </div>
                 </div>
-
-                <!-- Dryers D1-D6 -->
                 <div class="bg-orange-50/50 p-2 rounded-xl border border-orange-100 shadow-xs flex flex-col justify-between flex-1 overflow-hidden">
-                    <h2 class="text-[10px] font-bold text-orange-900 uppercase tracking-wider mb-0.5 shrink-0">หมวดที่ 2: เครื่องอบผ้า (อบ 1 - 6)</h2>
+                    <h2 class="text-[10px] font-bold text-orange-900 uppercase tracking-wider mb-0.5 shrink-0">เครื่องอบผ้า (อบ 1 - 6)</h2>
                     <div class="grid grid-cols-3 gap-1.5 h-full">
-                        <button onclick="openDryModal(1, 20, 60)" class="bg-[#FFEDD5] hover:bg-[#FED7AA] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-orange-900 leading-tight">อบ 1</span>
-                            <span class="text-[9px] text-orange-700 font-medium">20กก. (28น.)</span>
-                            <span class="text-[10px] font-bold text-orange-950 mt-0.5">เริ่ม 60.-</span>
-                        </button>
-                        <button onclick="openDryModal(2, 20, 60)" class="bg-[#FFEDD5] hover:bg-[#FED7AA] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-orange-900 leading-tight">อบ 2</span>
-                            <span class="text-[9px] text-orange-700 font-medium">20กก. (28น.)</span>
-                            <span class="text-[10px] font-bold text-orange-950 mt-0.5">เริ่ม 60.-</span>
-                        </button>
-                        <button onclick="openDryModal(3, 15, 40)" class="bg-[#FFEDD5] hover:bg-[#FED7AA] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-orange-900 leading-tight">อบ 3</span>
-                            <span class="text-[9px] text-orange-700 font-medium">15กก. (28น.)</span>
-                            <span class="text-[10px] font-bold text-orange-950 mt-0.5">เริ่ม 40.-</span>
-                        </button>
-                        <button onclick="openDryModal(4, 15, 40)" class="bg-[#FFEDD5] hover:bg-[#FED7AA] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-orange-900 leading-tight">อบ 4</span>
-                            <span class="text-[9px] text-orange-700 font-medium">15กก. (28น.)</span>
-                            <span class="text-[10px] font-bold text-orange-950 mt-0.5">เริ่ม 40.-</span>
-                        </button>
-                        <button onclick="openDryModal(5, 15, 40)" class="bg-[#FFEDD5] hover:bg-[#FED7AA] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-orange-900 leading-tight">อบ 5</span>
-                            <span class="text-[9px] text-orange-700 font-medium">15กก. (28น.)</span>
-                            <span class="text-[10px] font-bold text-orange-950 mt-0.5">เริ่ม 40.-</span>
-                        </button>
-                        <button onclick="openDryModal(6, 15, 40)" class="bg-[#FFEDD5] hover:bg-[#FED7AA] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center transition shadow-xs h-full">
-                            <span class="text-base font-extrabold text-orange-900 leading-tight">อบ 6</span>
-                            <span class="text-[9px] text-orange-700 font-medium">15กก. (28น.)</span>
-                            <span class="text-[10px] font-bold text-orange-950 mt-0.5">เริ่ม 40.-</span>
-                        </button>
+                        <button onclick="openDryModal(1, 20, 60)" class="bg-[#FFEDD5] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-orange-900">อบ 1</span><span class="text-[9px] text-orange-700">20กก.</span><span class="text-[10px] font-bold text-orange-950">60.-</span></button>
+                        <button onclick="openDryModal(2, 20, 60)" class="bg-[#FFEDD5] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-orange-900">อบ 2</span><span class="text-[9px] text-orange-700">20กก.</span><span class="text-[10px] font-bold text-orange-950">60.-</span></button>
+                        <button onclick="openDryModal(3, 15, 40)" class="bg-[#FFEDD5] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-orange-900">อบ 3</span><span class="text-[9px] text-orange-700">15กก.</span><span class="text-[10px] font-bold text-orange-950">40.-</span></button>
+                        <button onclick="openDryModal(4, 15, 40)" class="bg-[#FFEDD5] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-orange-900">อบ 4</span><span class="text-[9px] text-orange-700">15กก.</span><span class="text-[10px] font-bold text-orange-950">40.-</span></button>
+                        <button onclick="openDryModal(5, 15, 40)" class="bg-[#FFEDD5] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-orange-900">อบ 5</span><span class="text-[9px] text-orange-700">15กก.</span><span class="text-[10px] font-bold text-orange-950">40.-</span></button>
+                        <button onclick="openDryModal(6, 15, 40)" class="bg-[#FFEDD5] p-1 rounded-xl border border-orange-200 text-center flex flex-col justify-center items-center shadow-xs h-full"><span class="text-base font-extrabold text-orange-900">อบ 6</span><span class="text-[9px] text-orange-700">15กก.</span><span class="text-[10px] font-bold text-orange-950">40.-</span></button>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Right Side (30% -> 4 Cols): Vertical Cart & Category 3 (Detergents) -->
             <div class="lg:col-span-4 flex flex-col gap-2 h-full overflow-hidden">
-                
-                <!-- Category 3: Detergents -->
                 <div class="bg-emerald-50/50 p-2 rounded-xl border border-emerald-100 shadow-xs shrink-0">
-                    <h2 class="text-[10px] font-bold text-emerald-900 uppercase tracking-wider mb-1">หมวดที่ 3: น้ำยาและสินค้า</h2>
+                    <h2 class="text-[10px] font-bold text-emerald-900 uppercase tracking-wider mb-1">น้ำยาและสินค้า</h2>
                     <div class="grid grid-cols-2 gap-1.5">
-                        <button onclick="addItem('น้ำยาซัก (ซอง)', 5)" class="bg-[#ECFDF5] hover:bg-[#D1FAE5] p-1.5 rounded-xl border border-emerald-200 text-center transition shadow-xs">
-                            <div class="font-bold text-emerald-900 text-xs">น้ำยาซอง</div>
-                            <div class="text-[9px] text-emerald-700">5.-</div>
-                        </button>
-                        <button onclick="addItem('น้ำยาขวดพรีเมียม', 20)" class="bg-[#ECFDF5] hover:bg-[#D1FAE5] p-1.5 rounded-xl border border-emerald-200 text-center transition shadow-xs">
-                            <div class="font-bold text-emerald-900 text-xs">น้ำยาขวด</div>
-                            <div class="text-[9px] text-emerald-700">20.-</div>
-                        </button>
-                        <button onclick="addCustomItem()" class="col-span-2 bg-white hover:bg-emerald-50 p-1.5 rounded-xl border border-dashed border-emerald-300 text-center transition shadow-xs text-emerald-800 text-[11px] font-medium">
-                            + เพิ่มรายการอื่นๆ
-                        </button>
+                        <button onclick="addItem('น้ำยาซัก (ซอง)', 5)" class="bg-[#ECFDF5] p-1.5 rounded-xl border border-emerald-200 text-center shadow-xs"><div class="font-bold text-emerald-900 text-xs">น้ำยาซอง</div><div class="text-[9px] text-emerald-700">5.-</div></button>
+                        <button onclick="addItem('น้ำยาขวดพรีเมียม', 20)" class="bg-[#ECFDF5] p-1.5 rounded-xl border border-emerald-200 text-center shadow-xs"><div class="font-bold text-emerald-900 text-xs">น้ำยาขวด</div><div class="text-[9px] text-emerald-700">20.-</div></button>
                     </div>
                 </div>
-
-                <!-- Cart Summary Panel -->
                 <div class="bg-white p-2 rounded-xl border border-stone-100 shadow-xs flex-1 flex flex-col justify-between overflow-hidden">
                     <div class="flex flex-col h-full overflow-hidden">
                         <h2 class="font-bold text-stone-800 mb-1 pb-1 border-b border-stone-100 text-xs shrink-0">รายการในตะกร้า</h2>
-                        <div id="cart-items" class="space-y-1 flex-1 overflow-y-auto pr-1">
-                            <div class="text-center text-stone-400 py-6 text-xs">ยังไม่มีรายการสินค้า</div>
-                        </div>
+                        <div id="cart-items" class="space-y-1 flex-1 overflow-y-auto pr-1"><div class="text-center text-stone-400 py-6 text-xs">ยังไม่มีรายการสินค้า</div></div>
                     </div>
                     <div class="border-t border-stone-100 pt-2 mt-1 shrink-0">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-stone-500 text-xs font-medium">ยอดรวมทั้งสิ้น</span>
-                            <span id="cart-total" class="text-base font-bold text-stone-900">0.00 บาท</span>
-                        </div>
-                        <button onclick="sendToCustomerDisplay()" class="w-full bg-stone-900 hover:bg-stone-800 text-white font-medium py-2 rounded-xl transition text-xs shadow-xs">
-                            ส่ง QR Code ไปยังจอฝั่งลูกค้า
-                        </button>
+                        <div class="flex justify-between items-center mb-2"><span class="text-stone-500 text-xs font-medium">ยอดรวมทั้งสิ้น</span><span id="cart-total" class="text-base font-bold text-stone-900">0.00 บาท</span></div>
+                        <button onclick="sendToCustomerDisplay()" class="w-full bg-stone-900 text-white font-medium py-2 rounded-xl text-xs shadow-xs">ส่ง QR Code ไปยังจอฝั่งลูกค้า</button>
                     </div>
                 </div>
-
             </div>
-
         </div>
 
         <!-- 2. CUSTOMER DISPLAY VIEW -->
@@ -185,7 +99,6 @@
                     <p class="text-xs text-stone-400 uppercase tracking-wider">ยอดชำระสุทธิ</p>
                     <div id="cust-display-amount" class="text-4xl font-bold text-stone-900 mt-1">0.00 บาท</div>
                 </div>
-                <!-- ช่องแสดงรูป QR Code -->
                 <div class="bg-stone-50 p-4 rounded-2xl border border-stone-100 inline-block">
                     <div id="qrcode-container" class="flex justify-center items-center bg-white p-3 rounded-xl border border-stone-200 shadow-xs"></div>
                 </div>
@@ -201,32 +114,11 @@
         <!-- 3. SALES REPORT VIEW -->
         <div id="view-report" class="view-section space-y-3 overflow-y-auto">
             <div class="bg-white p-3 rounded-2xl border border-stone-100 shadow-xs flex justify-between items-center">
-                <div>
-                    <h2 class="font-bold text-stone-800 text-xs">รายงานสรุปยอดขาย</h2>
-                    <p class="text-[10px] text-stone-500">ตรวจสอบยอดขายย้อนหลัง</p>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="bg-white p-3 rounded-2xl border border-stone-100 shadow-xs">
-                    <div class="text-[10px] text-stone-400 uppercase font-semibold">ยอดขายวันนี้</div>
-                    <div id="report-today" class="text-lg font-bold text-stone-900 mt-0.5">0.00 บาท</div>
-                </div>
-                <div class="bg-white p-3 rounded-2xl border border-stone-100 shadow-xs">
-                    <div class="text-[10px] text-stone-400 uppercase font-semibold">ยอดขายสัปดาห์นี้</div>
-                    <div id="report-week" class="text-lg font-bold text-stone-900 mt-0.5">0.00 บาท</div>
-                </div>
-                <div class="bg-white p-3 rounded-2xl border border-stone-100 shadow-xs">
-                    <div class="text-[10px] text-stone-400 uppercase font-semibold">ยอดขายเดือนนี้</div>
-                    <div id="report-month" class="text-lg font-bold text-stone-900 mt-0.5">0.00 บาท</div>
-                </div>
+                <h2 class="font-bold text-stone-800 text-xs">รายงานสรุปยอดขาย</h2>
             </div>
             <div class="bg-white rounded-2xl border border-stone-100 shadow-xs overflow-hidden">
                 <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-stone-50 text-stone-400 text-[10px] uppercase border-b border-stone-100">
-                            <th class="p-2.5">เวลา</th><th class="p-2.5">รายการ</th><th class="p-2.5 text-right">ยอดเงิน</th><th class="p-2.5 text-center">สถานะ</th>
-                        </tr>
-                    </thead>
+                    <thead><tr class="bg-stone-50 text-stone-400 text-[10px] uppercase border-b border-stone-100"><th class="p-2.5">เวลา</th><th class="p-2.5">รายการ</th><th class="p-2.5 text-right">ยอดเงิน</th><th class="p-2.5 text-center">สถานะ</th></tr></thead>
                     <tbody id="report-table-body" class="text-xs text-stone-600"></tbody>
                 </table>
             </div>
@@ -234,359 +126,154 @@
 
     </main>
 
-    <!-- MODAL 1: SELECT WASHER TEMPERATURE -->
-    <div id="wash-modal" class="fixed inset-0 bg-stone-900/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <!-- Modals -->
+    <div id="wash-modal" class="fixed inset-0 bg-stone-900/40 hidden flex items-center justify-center p-4">
         <div class="bg-white max-w-md w-full p-6 rounded-3xl shadow-xl space-y-4">
             <h3 id="wash-modal-title" class="font-bold text-stone-800 text-lg">เลือกอุณหภูมิน้ำ</h3>
             <div id="wash-options" class="grid grid-cols-1 gap-3"></div>
-            <div>
-                <label class="block text-xs font-semibold text-stone-500 mb-1">หมายเหตุ (คำสั่งพิเศษ / พิมพ์ด้วยเสียง)</label>
-                <div class="flex gap-2">
-                    <input type="text" id="wash-note" placeholder="เช่น แยกผ้าสี, ซักด่วน..." class="flex-1 border border-stone-200 px-3 py-2 rounded-xl text-sm outline-none focus:border-stone-800">
-                    <button onclick="startVoiceInput('wash-note')" class="bg-stone-100 hover:bg-stone-200 px-3 py-2 rounded-xl text-xs font-medium text-stone-700">🎤 พูด</button>
-                </div>
-            </div>
-            <button onclick="closeWashModal()" class="w-full bg-stone-100 hover:bg-stone-200 text-stone-600 py-2.5 rounded-xl transition text-sm">ยกเลิก</button>
+            <button onclick="closeWashModal()" class="w-full bg-stone-100 text-stone-600 py-2.5 rounded-xl text-sm">ยกเลิก</button>
         </div>
     </div>
 
-    <!-- MODAL 2: SELECT DRYER & EXTRA TIME -->
-    <div id="dry-modal" class="fixed inset-0 bg-stone-900/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
-        <div class="bg-white max-w-md w-full p-6 rounded-3xl shadow-xl space-y-4">
-            <h3 id="dry-modal-title" class="font-bold text-stone-800 text-lg">ตั้งค่าเครื่องอบผ้า</h3>
-            <div class="space-y-3">
-                <div class="flex justify-between items-center bg-stone-50 p-3 rounded-xl border border-stone-100">
-                    <div>
-                        <div class="font-medium text-stone-800 text-sm">ราคาเริ่มต้น (<span id="dry-base-min">28</span> นาที)</div>
-                        <div id="dry-base-price-txt" class="text-xs text-stone-500">60 บาท</div>
-                    </div>
-                    <span class="text-xs bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full font-medium">ราคาหลัก</span>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-stone-500 mb-1">เพิ่มเวลาอบ (+10 บาท ได้ +<span id="dry-add-min">5</span> นาที)</label>
-                    <div class="flex items-center space-x-3">
-                        <button onclick="adjustExtraTime(-1)" class="w-10 h-10 bg-stone-100 rounded-xl font-bold text-stone-700 hover:bg-stone-200">-</button>
-                        <span id="extra-times-count" class="text-lg font-bold text-stone-900 w-12 text-center">0 ครั้ง</span>
-                        <button onclick="adjustExtraTime(1)" class="w-10 h-10 bg-stone-100 rounded-xl font-bold text-stone-700 hover:bg-stone-200">+</button>
-                        <span id="extra-time-total-price" class="text-sm text-stone-500 ml-auto">+0 บาท</span>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-stone-500 mb-1">หมายเหตุ (คำสั่งพิเศษ / พิมพ์ด้วยเสียง)</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="dry-note" placeholder="เช่น อบผ้าห่มหนา..." class="flex-1 border border-stone-200 px-3 py-2 rounded-xl text-sm outline-none focus:border-stone-800">
-                        <button onclick="startVoiceInput('dry-note')" class="bg-stone-100 hover:bg-stone-200 px-3 py-2 rounded-xl text-xs font-medium text-stone-700">🎤 พูด</button>
-                    </div>
-                </div>
-            </div>
-            <div class="flex gap-2 pt-2">
-                <button onclick="confirmDryItem()" class="flex-1 bg-stone-900 hover:bg-stone-800 text-white font-medium py-3 rounded-xl transition text-sm">ยืนยันเพิ่มลงตะกร้า</button>
-                <button onclick="closeDryModal()" class="px-4 bg-stone-100 hover:bg-stone-200 text-stone-600 py-3 rounded-xl transition text-sm">ยกเลิก</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Staff Confirmation Modal -->
-    <div id="payment-confirm-modal" class="fixed inset-0 bg-stone-900/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div id="payment-confirm-modal" class="fixed inset-0 bg-stone-900/40 hidden flex items-center justify-center p-4">
         <div class="bg-white max-w-sm w-full p-6 rounded-3xl shadow-xl text-center space-y-4">
             <h3 class="font-bold text-stone-800 text-lg">รอการชำระเงินจากลูกค้า</h3>
             <div id="modal-pay-total" class="text-3xl font-bold text-emerald-600">0.00 บาท</div>
-            <p class="text-xs text-stone-400">จอฝั่งลูกค้ากำลังแสดง QR Code อยู่...</p>
             <div class="space-y-2 pt-2">
-                <button onclick="confirmPayment()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl transition text-sm">
-                    ยืนยันรับเงินสำเร็จ & พิมพ์บิล
-                </button>
-                <button onclick="closeConfirmModal()" class="w-full bg-stone-100 hover:bg-stone-200 text-stone-600 py-2.5 rounded-xl transition text-sm">
-                    ยกเลิก / ทำรายการใหม่
-                </button>
+                <button onclick="confirmPayment()" class="w-full bg-emerald-600 text-white font-medium py-3 rounded-xl text-sm">ยืนยันรับเงินสำเร็จ & พิมพ์บิล</button>
+                <button onclick="closeConfirmModal()" class="w-full bg-stone-100 text-stone-600 py-2.5 rounded-xl text-sm">ยกเลิก</button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Logic & BBL API Fetcher -->
+    <!-- JavaScript Logic -->
     <script>
         let cart = [];
         let transactions = JSON.parse(localStorage.getItem('laundry_transactions')) || [];
-        let currentDry = { machineNo: 1, basePrice: 60, addMin: 5, extraCount: 0 };
 
         function switchView(view) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('btn-staff-view').className = "px-2.5 py-1 rounded-lg font-medium text-xs transition bg-stone-100 text-stone-600 hover:bg-stone-200";
-            document.getElementById('btn-customer-view').className = "px-2.5 py-1 rounded-lg font-medium text-xs transition bg-stone-100 text-stone-600 hover:bg-stone-200";
-            document.getElementById('btn-report-view').className = "px-2.5 py-1 rounded-lg font-medium text-xs transition bg-stone-100 text-stone-600 hover:bg-stone-200";
-
             if(view === 'staff') {
                 document.getElementById('view-staff').classList.add('active');
-                document.getElementById('btn-staff-view').className = "px-2.5 py-1 rounded-lg font-medium text-xs transition bg-stone-900 text-white";
-                document.getElementById('mode-indicator').innerText = "● โหมดพนักงาน (Staff POS)";
+                document.getElementById('mode-indicator').innerText = "● โหมดพนักงาน";
             } else if(view === 'customer') {
                 document.getElementById('view-customer').classList.add('active');
-                document.getElementById('btn-customer-view').className = "px-2.5 py-1 rounded-lg font-medium text-xs transition bg-stone-900 text-white";
-                document.getElementById('mode-indicator').innerText = "● จอแสดงผลลูกค้า (Customer Display)";
+                document.getElementById('mode-indicator').innerText = "● จอฝั่งลูกค้า";
             } else {
                 document.getElementById('view-report').classList.add('active');
-                document.getElementById('btn-report-view').className = "px-2.5 py-1 rounded-lg font-medium text-xs transition bg-stone-900 text-white";
                 document.getElementById('mode-indicator').innerText = "● รายงานยอดขาย";
                 loadReportData();
             }
         }
 
-        function openWashModal(machineNo, name, kg) {
-            document.getElementById('wash-modal-title').innerText = `เลือกอุณหภูมิน้ำ: เครื่อง ${name}`;
-            let optionsHtml = '';
-            let prices = {};
-            if(kg === 10) prices = { 'น้ำเย็น': 40, 'น้ำอุ่น': 50, 'น้ำร้อน': 60 };
-            else if(kg === 15) prices = { 'น้ำเย็น': 60, 'น้ำอุ่น': 70, 'น้ำร้อน': 80 };
-            else if(kg === 20) prices = { 'น้ำเย็น': 70, 'น้ำอุ่น': 80, 'น้ำร้อน': 90 };
-
-            for(let [temp, price] of Object.entries(prices)) {
-                optionsHtml += `
-                    <button onclick="addWashItem('${name} (${temp})', ${price})" class="w-full flex justify-between items-center p-3.5 rounded-xl border border-stone-200 hover:border-sky-500 hover:bg-sky-50/20 transition text-left">
-                        <span class="font-medium text-stone-800 text-sm">${temp}</span>
-                        <span class="font-bold text-sky-900 text-sm">${price} บาท</span>
-                    </button>
-                `;
+        function openWashModal(no, name, kg) {
+            let prices = kg === 10 ? {'น้ำเย็น': 40, 'น้ำอุ่น': 50} : {'น้ำเย็น': 60, 'น้ำอุ่น': 70};
+            let html = '';
+            for(let [k, v] of Object.entries(prices)) {
+                html += `<button onclick="addItem('${name} (${k})', ${v})" class="w-full flex justify-between p-3 rounded-xl border hover:bg-sky-50"><span>${k}</span><span class="font-bold">${v} บาท</span></button>`;
             }
-            document.getElementById('wash-options').innerHTML = optionsHtml;
-            document.getElementById('wash-note').value = '';
+            document.getElementById('wash-options').innerHTML = html;
             document.getElementById('wash-modal').classList.remove('hidden');
         }
+        function closeWashModal() { document.getElementById('wash-modal').classList.add('hidden'); }
 
-        function addWashItem(itemName, price) {
-            let note = document.getElementById('wash-note').value;
-            let fullName = note ? `${itemName} [หมายเหตุ: ${note}]` : itemName;
-            cart.push({ name: fullName, price: price });
-            updateCartUI();
-            closeWashModal();
-        }
-
-        function closeWashModal() {
-            document.getElementById('wash-modal').classList.add('hidden');
-        }
-
-        function openDryModal(machineNo, kg, basePrice) {
-            currentDry.machineNo = machineNo;
-            currentDry.basePrice = basePrice;
-            currentDry.addMin = (machineNo <= 2) ? 5 : 6;
-            currentDry.extraCount = 0;
-
-            document.getElementById('dry-modal-title').innerText = `ตั้งค่าเครื่องอบ #${machineNo} (${kg}กก.)`;
-            document.getElementById('dry-base-price-txt').innerText = `${basePrice} บาท`;
-            document.getElementById('extra-times-count').innerText = `0 ครั้ง`;
-            document.getElementById('extra-time-total-price').innerText = `+0 บาท`;
-            document.getElementById('dry-note').value = '';
-            document.getElementById('dry-modal').classList.remove('hidden');
-        }
-
-        function adjustExtraTime(change) {
-            currentDry.extraCount += change;
-            if(currentDry.extraCount < 0) currentDry.extraCount = 0;
-            let extraPrice = currentDry.extraCount * 10;
-            document.getElementById('extra-times-count').innerText = `${currentDry.extraCount} ครั้ง`;
-            document.getElementById('extra-time-total-price').innerText = `+${extraPrice} บาท`;
-        }
-
-        function confirmDryItem() {
-            let extraPrice = currentDry.extraCount * 10;
-            let totalPrice = currentDry.basePrice + extraPrice;
-            let itemName = `อบ #${currentDry.machineNo} (เริ่มต้น 28น.`;
-            if(currentDry.extraCount > 0) {
-                let totalAddedMin = currentDry.extraCount * currentDry.addMin;
-                itemName += ` +เพิ่มเวลา ${totalAddedMin}น.`;
-            }
-            itemName += `)`;
-
-            let note = document.getElementById('dry-note').value;
-            if(note) itemName += ` [หมายเหตุ: ${note}]`;
-
-            cart.push({ name: itemName, price: totalPrice });
-            updateCartUI();
-            closeDryModal();
-        }
-
-        function closeDryModal() {
-            document.getElementById('dry-modal').classList.add('hidden');
-        }
-
-        function startVoiceInput(inputId) {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                alert("เบราว์เซอร์นี้ไม่รองรับการพิมพ์ด้วยเสียง กรุณาพิมพ์ด้วยคีย์บอร์ด");
-                return;
-            }
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'th-TH';
-            recognition.interimResults = false;
-            recognition.onstart = () => { alert("กำลังฟังเสียงพูด... กรุณาพูดหมายเหตุครับ"); };
-            recognition.onresult = (event) => {
-                document.getElementById(inputId).value = event.results[0][0].transcript;
-            };
-            recognition.onerror = () => { alert("เกิดข้อผิดพลาดในการรับเสียง ลองใหม่อีกครั้ง"); };
-            recognition.start();
-        }
-
-        function addItem(name, price) {
-            cart.push({ name, price });
-            updateCartUI();
-        }
-
-        function addCustomItem() {
-            let name = prompt("ระบุชื่อรายการสินค้า/บริการ:");
-            if(!name) return;
-            let price = parseFloat(prompt("ระบุราคา (บาท):", "0"));
-            if(isNaN(price) || price <= 0) return;
-            addItem(name, price);
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
+        function addItem(name, price) { cart.push({name, price}); updateCartUI(); closeWashModal(); }
+        function removeItem(i) { cart.splice(i, 1); updateCartUI(); }
 
         function updateCartUI() {
             let container = document.getElementById('cart-items');
             let totalEl = document.getElementById('cart-total');
-            if(cart.length === 0) {
-                container.innerHTML = `<div class="text-center text-stone-400 py-6 text-xs">ยังไม่มีรายการสินค้า</div>`;
-                totalEl.innerText = "0.00 บาท";
-                return;
-            }
-            let html = '';
-            let total = 0;
-            cart.forEach((item, index) => {
+            if(cart.length === 0) { container.innerHTML = `<div class="text-center text-stone-400 py-6 text-xs">ยังไม่มีรายการสินค้า</div>`; totalEl.innerText = "0.00 บาท"; return; }
+            let html = '', total = 0;
+            cart.forEach((item, i) => {
                 total += item.price;
-                html += `
-                    <div class="flex justify-between items-center bg-stone-50 p-2 rounded-lg border border-stone-100">
-                        <div><div class="font-medium text-stone-800 text-xs">${item.name}</div><div class="text-[10px] text-stone-500">${item.price} บาท</div></div>
-                        <button onclick="removeItem(${index})" class="text-stone-400 hover:text-red-500 text-xs px-2 py-0.5">ลบ</button>
-                    </div>
-                `;
+                html += `<div class="flex justify-between items-center bg-stone-50 p-2 rounded-lg"><div><div class="font-medium text-xs">${item.name}</div><div class="text-[10px] text-stone-500">${item.price} บาท</div></div><button onclick="removeItem(${i})" class="text-red-500 text-xs px-2">ลบ</button></div>`;
             });
             container.innerHTML = html;
             totalEl.innerText = total.toLocaleString() + " บาท";
         }
 
-        function sendToCustomerDisplay() {
-            if(cart.length === 0) {
-                alert("กรุณาเลือกรายการสินค้าก่อน");
-                return;
-            }
+        // ส่งออร์เดอร์ขึ้น Server กลาง เพื่อให้ iPhone ฝั่งลูกค้าดึงไปแสดงผล
+        async function sendToCustomerDisplay() {
+            if(cart.length === 0) { alert("กรุณาเลือกรายการ"); return; }
             let total = cart.reduce((sum, item) => sum + item.price, 0);
-            localStorage.setItem('laundry_active_order', JSON.stringify({ total: total, status: 'waiting' }));
+            
+            await fetch('/api/set-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ total: total, status: 'waiting' })
+            });
+
             document.getElementById('modal-pay-total').innerText = total.toLocaleString() + " บาท";
             document.getElementById('payment-confirm-modal').classList.remove('hidden');
         }
 
-        function closeConfirmModal() {
-            document.getElementById('payment-confirm-modal').classList.add('hidden');
-        }
+        function closeConfirmModal() { document.getElementById('payment-confirm-modal').classList.add('hidden'); }
 
-        function confirmPayment() {
+        async function confirmPayment() {
             let total = cart.reduce((sum, item) => sum + item.price, 0);
             let itemsSummary = cart.map(i => i.name).join(', ');
-
-            let newTx = {
-                id: 'TX-' + Date.now(),
-                date: new Date().toISOString(),
-                items: itemsSummary,
-                total: total,
-                status: 'สำเร็จ'
-            };
-
-            transactions.unshift(newTx);
+            transactions.unshift({ id: 'TX-' + Date.now(), date: new Date().toISOString(), items: itemsSummary, total: total, status: 'สำเร็จ' });
             localStorage.setItem('laundry_transactions', JSON.stringify(transactions));
-            localStorage.setItem('laundry_active_order', JSON.stringify({ total: total, status: 'success' }));
 
-            alert("ชำระเงินสำเร็จ! สั่งพิมพ์ใบเสร็จออกเครื่องพิมพ์ความร้อนเรียบร้อย");
+            await fetch('/api/set-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ total: total, status: 'success' })
+            });
+
+            alert("ชำระเงินสำเร็จ!");
             cart = [];
             updateCartUI();
             closeConfirmModal();
         }
 
-        // อัปเดตการแสดงผลฝั่งลูกค้าแบบ Real-time และสั่งสร้าง QR Code
-        window.addEventListener('storage', (e) => {
-            if(e.key === 'laundry_active_order') {
-                let order = JSON.parse(e.newValue);
-                if(order) {
+        // ฝั่งลูกค้า: คอยเช็กสถานะจาก Server ทุกๆ 2 วินาที (รองรับการเปิดแยกเครื่อง iPhone/Xiaomi)
+        setInterval(async () => {
+            // ทำงานเฉพาะตอนเปิดหน้าจอฝั่งลูกค้าอยู่
+            if(!document.getElementById('view-customer').classList.contains('active')) return;
+            try {
+                let res = await fetch('/api/get-order');
+                let data = await res.json();
+                if(data.success && data.currentOrder) {
+                    let order = data.currentOrder;
                     if(order.status === 'waiting') {
                         document.getElementById('cust-idle').classList.add('hidden');
                         document.getElementById('cust-success').classList.add('hidden');
                         document.getElementById('cust-active').classList.remove('hidden');
                         document.getElementById('cust-display-amount').innerText = order.total.toLocaleString() + " บาท";
-                        
-                        // เรียกใช้ฟังก์ชันดึง QR Code ผ่าน Backend API
                         fetchBBLQRCode(order.total);
-
                     } else if(order.status === 'success') {
                         document.getElementById('cust-active').classList.add('hidden');
                         document.getElementById('cust-success').classList.remove('hidden');
                     }
                 }
-            }
-        });
+            } catch(e) { console.error(e); }
+        }, 2000);
 
-        // ฟังก์ชันขอ QR Code จาก Server Backend และวาดรูปลงหน้าจอ
         async function fetchBBLQRCode(amount) {
             try {
-                let response = await fetch('/api/create-bbl-qr', {
+                let res = await fetch('/api/create-bbl-qr', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ amount: amount })
                 });
-                let data = await response.json();
+                let data = await res.json();
                 if(data.success) {
-                    let qrContainer = document.getElementById("qrcode-container");
-                    qrContainer.innerHTML = ""; // ล้างค่าเก่าทิ้งก่อนวาดใหม่
-                    
-                    // ตรวจสอบว่าโหลดไลบรารี qrcode.js มาหรือยัง
-                    if(typeof QRCode !== 'undefined') {
-                        new QRCode(qrContainer, {
-                            text: data.qrData,
-                            width: 200,
-                            height: 200,
-                            colorDark: "#000000",
-                            colorLight: "#ffffff",
-                            correctLevel: QRCode.CorrectLevel.M
-                        });
-                    } else {
-                        qrContainer.innerHTML = "<p class='text-red-500 text-xs'>ไม่พบไลบรารี QR Code</p>";
-                    }
-                } else {
-                    alert("เกิดข้อผิดพลาดในการสร้างข้อมูล QR Code จากธนาคาร");
+                    let container = document.getElementById("qrcode-container");
+                    container.innerHTML = "";
+                    new QRCode(container, { text: data.qrData, width: 200, height: 200, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
                 }
-            } catch (e) {
-                console.error(e);
-                alert("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์หลังบ้านได้");
-            }
+            } catch(e) { console.error(e); }
         }
 
         function loadReportData() {
-            let todayStr = new Date().toISOString().split('T')[0];
-            let todayTotal = 0, monthTotal = 0;
-            let tableHtml = '';
-            if(transactions.length === 0) {
-                tableHtml = `<tr><td colspan="4" class="p-6 text-center text-stone-400">ยังไม่มีประวัติการทำรายการ</td></tr>`;
-            } else {
-                transactions.forEach(tx => {
-                    let txDate = new Date(tx.date);
-                    if(txDate.toISOString().split('T')[0] === todayStr) todayTotal += tx.total;
-                    if(txDate.getMonth() === new Date().getMonth()) monthTotal += tx.total;
-                    tableHtml += `
-                        <tr class="border-b border-stone-100">
-                            <td class="p-2.5 text-xs text-stone-500">${txDate.toLocaleString('th-TH')}</td>
-                            <td class="p-2.5 font-medium text-stone-800">${tx.items}</td>
-                            <td class="p-2.5 text-right font-bold text-stone-900">${tx.total.toLocaleString()} บาท</td>
-                            <td class="p-2.5 text-center"><span class="bg-emerald-50 text-emerald-600 text-xs px-2 py-0.5 rounded-full">${tx.status}</span></td>
-                        </tr>
-                    `;
-                });
-            }
-            document.getElementById('report-table-body').innerHTML = tableHtml;
-            document.getElementById('report-today').innerText = todayTotal.toLocaleString() + " บาท";
-            document.getElementById('report-week').innerText = (todayTotal * 1.4).toLocaleString() + " บาท";
-            document.getElementById('report-month').innerText = monthTotal.toLocaleString() + " บาท";
+            let html = '';
+            transactions.forEach(tx => {
+                html += `<tr class="border-b"><td class="p-2.5 text-xs">${new Date(tx.date).toLocaleString('th-TH')}</td><td class="p-2.5">${tx.items}</td><td class="p-2.5 text-right font-bold">${tx.total.toLocaleString()} บาท</td><td class="p-2.5 text-center"><span class="bg-emerald-50 text-emerald-600 text-xs px-2 py-0.5 rounded-full">${tx.status}</span></td></tr>`;
+            });
+            document.getElementById('report-table-body').innerHTML = html || `<tr><td colspan="4" class="p-6 text-center text-stone-400">ยังไม่มีรายการ</td></tr>`;
         }
-
         updateCartUI();
     </script>
 </body>
