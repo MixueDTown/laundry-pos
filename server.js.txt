@@ -8,7 +8,7 @@ app.use(express.json());
 // ให้บริการไฟล์หน้าเว็บ POS จากโฟลเดอร์เดียวกัน
 app.use(express.static(path.join(__dirname)));
 
-// ข้อมูลจำลองการเชื่อมต่อ API ของธนาคารกรุงเทพ (ใส่ Company Code และ Service Code ของคุณ)
+// ข้อมูลการเชื่อมต่อ Bill Payment ของธนาคารกรุงเทพ (ข้อมูลอย่างเป็นทางการของคุณ)
 const BBL_CONFIG = {
     companyCode: 'BBLBPM',
     serviceCode: 'OTRRPQR'
