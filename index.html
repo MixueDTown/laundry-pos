@@ -21,7 +21,7 @@
         <div class="flex items-center space-x-2">
             <div class="w-7 h-7 rounded-lg bg-stone-900 flex items-center justify-center text-white font-bold text-xs">L</div>
             <div>
-                <h1 class="font-bold text-stone-800 text-xs">Minimal Laundry POS</h1>
+                <h1 class="font-bold text-stone-800 text-xs">Minimal Laundry</h1>
                 <p id="mode-indicator" class="text-[9px] text-emerald-600 font-medium">● โหมดพนักงาน (BBL Bill Payment Ready)</p>
             </div>
         </div>
@@ -503,35 +503,7 @@
             closeConfirmModal();
         }
 
-        // ขอ QR Code จาก Server Backend ที่เชื่อมกับ BBL API
-        async function fetchBBLQRCode(amount) {
-            try {
-                let response = await fetch('/api/create-bbl-qr', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount: amount })
-                });
-                let data = await response.json();
-                if(data.success) {
-                    document.getElementById("qrcode-container").innerHTML = "";
-                    new QRCode(document.getElementById("qrcode-container"), {
-                        text: data.qrData,
-                        width: 200,
-                        height: 200,
-                        colorDark: "#000000",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.M
-                    });
-                } else {
-                    alert("เกิดข้อผิดพลาดในการสร้าง QR Code");
-                }
-            } catch (e) {
-                console.error(e);
-                alert("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์หลังบ้านได้");
-            }
-        }
-
-        // อัปเดตการแสดงผลฝั่งลูกค้าแบบ Real-time
+        // อัปเดตการแสดงผลฝั่งลูกค้าแบบ Real-time และสั่งสร้าง QR Code
         window.addEventListener('storage', (e) => {
             if(e.key === 'laundry_active_order') {
                 let order = JSON.parse(e.newValue);
@@ -552,6 +524,41 @@
                 }
             }
         });
+
+        // ฟังก์ชันขอ QR Code จาก Server Backend และวาดรูปลงหน้าจอ
+        async function fetchBBLQRCode(amount) {
+            try {
+                let response = await fetch('/api/create-bbl-qr', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: amount })
+                });
+                let data = await response.json();
+                if(data.success) {
+                    let qrContainer = document.getElementById("qrcode-container");
+                    qrContainer.innerHTML = ""; // ล้างค่าเก่าทิ้งก่อนวาดใหม่
+                    
+                    // ตรวจสอบว่าโหลดไลบรารี qrcode.js มาหรือยัง
+                    if(typeof QRCode !== 'undefined') {
+                        new QRCode(qrContainer, {
+                            text: data.qrData,
+                            width: 200,
+                            height: 200,
+                            colorDark: "#000000",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.M
+                        });
+                    } else {
+                        qrContainer.innerHTML = "<p class='text-red-500 text-xs'>ไม่พบไลบรารี QR Code</p>";
+                    }
+                } else {
+                    alert("เกิดข้อผิดพลาดในการสร้างข้อมูล QR Code จากธนาคาร");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์หลังบ้านได้");
+            }
+        }
 
         function loadReportData() {
             let todayStr = new Date().toISOString().split('T')[0];
