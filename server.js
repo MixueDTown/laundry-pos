@@ -5,16 +5,16 @@ const path = require('path');
 const app = express();
 app.use(express.json());
 
-// ให้บริการไฟล์หน้าเว็บ POS จากโฟลเดอร์เดียวกัน
 app.use(express.static(path.join(__dirname)));
 
-// ข้อมูลการเชื่อมต่อ Bill Payment ของธนาคารกรุงเทพ (ข้อมูลอย่างเป็นทางการของคุณ)
 const BBL_CONFIG = {
     companyCode: 'BBLBPM',
     serviceCode: 'OTRRPQR'
 };
 
-// ฟังก์ชันคำนวณ CRC16 มาตรฐาน PromptPay
+// ตัวแปรกลางเก็บบิลล่าสุดบนเซิร์ฟเวอร์ (เพื่อให้มือถือ/แท็บเล็ตต่างเครื่องกันดึงข้อมูลตรงกันได้)
+let currentOrder = { total: 0, status: 'idle', timestamp: 0 };
+
 function calculateCRC16(str) {
     let crc = 0xFFFF;
     for (let c = 0; c < str.length; c++) {
@@ -28,7 +28,7 @@ function calculateCRC16(str) {
     return "0000".substr(0, 4 - hex.length) + hex;
 }
 
-// API สำหรับสร้าง PromptPay Bill Payment Payload
+// API สร้าง PromptPay QR Code
 app.post('/api/create-bbl-qr', (req, res) => {
     try {
         const { amount } = req.body;
@@ -40,15 +40,9 @@ app.post('/api/create-bbl-qr', (req, res) => {
         
         let merchantAccount = "";
         merchantAccount += "0016A000000677010111"; 
-        
-        let companyCode = BBL_CONFIG.companyCode;
-        merchantAccount += "01" + String(companyCode.length).padStart(2, '0') + companyCode;
-        
-        let serviceCode = BBL_CONFIG.serviceCode;
-        merchantAccount += "02" + String(serviceCode.length).padStart(2, '0') + serviceCode;
-
-        let ref2 = "00";
-        merchantAccount += "03" + String(ref2.length).padStart(2, '0') + ref2;
+        merchantAccount += "01" + String(BBL_CONFIG.companyCode.length).padStart(2, '0') + BBL_CONFIG.companyCode;
+        merchantAccount += "02" + String(BBL_CONFIG.serviceCode.length).padStart(2, '0') + BBL_CONFIG.serviceCode;
+        merchantAccount += "030200";
         
         payload += "29" + String(merchantAccount.length).padStart(2, '0') + merchantAccount;
         payload += "5303764"; 
@@ -63,6 +57,21 @@ app.post('/api/create-bbl-qr', (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
+});
+
+// API สำหรับบันทึกออร์เดอร์ฝั่งพนักงาน
+app.post('/api/set-order', (req, res) => {
+    currentOrder = {
+        total: req.body.total,
+        status: req.body.status,
+        timestamp: Date.now()
+    };
+    res.json({ success: true, currentOrder });
+});
+
+// API สำหรับให้จอลูกค้าดึงสถานะออร์เดอร์ปัจจุบัน
+app.get('/api/get-order', (req, res) => {
+    res.json({ success: true, currentOrder });
 });
 
 const PORT = process.env.PORT || 3000;
